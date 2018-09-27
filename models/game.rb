@@ -19,6 +19,8 @@ class Game
 
     p @player.cards
     p @dealer.cards
+    puts player.points
+    puts @dealer.points
   end
 
   def deal_two_cards
