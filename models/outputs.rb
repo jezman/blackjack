@@ -19,7 +19,7 @@ class Ouputs
     system 'clear'
     puts "Cash: #{player.cash_to_s}"
     puts
-    puts "#{dealer.name}: #{dealer.cards_to_s}"
+    puts "#{dealer.name}: #{dealer.hide_cards_to_s}"
     puts "#{player.name}: #{player.cards_to_s}"
     puts
     puts "Points: #{player.points}"

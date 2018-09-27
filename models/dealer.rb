@@ -5,7 +5,7 @@ class Dealer < Player
     super('Dealer')
   end
 
-  def cards_to_s
-    super.split(' ').map { |c| c.replace('**') }.join(' ')
+  def hide_cards_to_s
+    cards_to_s.split(' ').map { |c| c.replace('**') }.join(' ')
   end
 end
