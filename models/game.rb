@@ -12,15 +12,15 @@ class Game
   def initialize
     @output = Ouputs.new
     @input = Inputs.new
+    @output.splash_screen
+    @input.wait_to_enter
+    @player = Player.new(@input.username)
     @deck = Deck.new
-    @player = Player.new('Jezman')
     @dealer = Dealer.new
     deal_two_cards
+    init_bet
 
-    p @player.cards
-    p @dealer.cards
-    puts player.points
-    puts @dealer.points
+    @output.main_interface(@player, @dealer)
   end
 
   def deal_two_cards
@@ -28,5 +28,10 @@ class Game
       @player.cards << @deck.deal_card
       @dealer.cards << @deck.deal_card
     end
+  end
+
+  def init_bet
+    @player.init_bet
+    @dealer.init_bet
   end
 end
