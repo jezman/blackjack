@@ -2,10 +2,12 @@ class Player
   attr_reader :name, :cash
   attr_accessor :cards
 
+  NAME_FORMAT = /^[a-z]{3,25}$/i
   INIT_BET = 10
 
   def initialize(name)
     @name = name.capitalize
+    validate!
     @cash = 100
     @cards = []
     @points = 0
@@ -30,5 +32,11 @@ class Player
 
   def cash_to_s
     "#{@cash}$"
+  end
+
+  protected
+
+  def validate!
+    raise 'invalid name' if @name !~ NAME_FORMAT
   end
 end
