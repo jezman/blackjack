@@ -5,22 +5,30 @@ class Card
   def initialize(rank, suite)
     @rank = rank
     @suite = suite
-    @value = assign_value(rank)
+    @value = assign_value
   end
 
   def switch_ace_value
-    @value = 11 if @value == 1
+    @value = 1 if @value == 11
+  end
+
+  def ace?
+    @rank == 'A'
+  end
+
+  def face?
+    %w[J Q K].include?(@rank)
   end
 
   private
 
-  def assign_value(rank)
-    @value = if %w[J Q K].include?(rank)
+  def assign_value
+    @value = if face?
                10
-             elsif rank == 'A'
+             elsif ace?
                1
              else
-               rank
+               @rank
              end
   end
 end
