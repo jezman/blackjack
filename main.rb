@@ -1,6 +1,6 @@
-require_relative 'models/app.rb'
+require_relative 'models/game'
 
 # Prevent Ctrl+C for exiting
 trap('INT', 'SIG_IGN')
 
-App.new.start
+Game.new.start
