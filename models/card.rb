@@ -1,11 +1,15 @@
 class Card
-  attr_reader :rank, :site
+  attr_reader :rank, :suite
   attr_accessor :value
 
   def initialize(rank, suite)
     @rank = rank
     @suite = suite
     @value = assign_value(rank)
+  end
+
+  def switch_ace_value
+    @value = 11 if @value == 1
   end
 
   private
