@@ -15,12 +15,14 @@ class Ouputs
     ).freeze
   end
 
-  def main_interface(player, dealer)
+  def main_interface(player, dealer, bank)
     system 'clear'
+    puts "Cash: #{player.cash_to_s}"
+    puts
     puts "#{dealer.name}: #{dealer.cards_to_s}"
     puts "#{player.name}: #{player.cards_to_s}"
     puts
     puts "Points: #{player.points}"
-    puts "Cash: #{player.cash_to_s}"
+    puts "At stake: #{bank}$"
   end
 end

@@ -2,6 +2,8 @@ class Player
   attr_reader :name, :cash
   attr_accessor :cards
 
+  INIT_BET = 10
+
   def initialize(name)
     @name = name.capitalize
     @cash = 100
@@ -16,7 +18,8 @@ class Player
   end
 
   def init_bet
-    @cash -= 10
+    @cash -= INIT_BET
+    INIT_BET
   end
 
   def cards_to_s
