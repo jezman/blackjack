@@ -15,6 +15,16 @@ class Player
     @points = points
   end
 
+  def init_bet
+    @cash -= 10
+  end
+
+  def cards_to_s
+    cards = []
+    @cards.each { |card| cards << "#{card.rank}#{card.suite}" }
+    cards.join(' ')
+  end
+
   def cash_to_s
     "#{@cash}$"
   end
