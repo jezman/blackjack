@@ -9,7 +9,7 @@ class Card
   end
 
   def switch_ace_value
-    @value = 1 if @value == 11
+    @value = 11 if @value == 1
   end
 
   def ace?
@@ -30,7 +30,7 @@ class Card
     @value = if face?
                10
              elsif ace?
-               1
+               11
              else
                @rank
              end
