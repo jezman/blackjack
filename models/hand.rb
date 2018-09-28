@@ -22,6 +22,7 @@ class Hand
   end
 
   def bet
+    validate_cashe!
     @cash -= BET_SIZE
     BET_SIZE
   end
@@ -48,11 +49,19 @@ class Hand
   end
 
   def validate_cards_count!
-    raise HandError, 'too many cards, you can take only three' unless check_cards_count
+    raise HandError, 'too many cards, you can take only three' unless check_limit
   end
 
-  def check_cards_count
+  def validate_cashe!
+    raise HandError, 'sorry, you have no money...' unless positive?
+  end
+
+  def check_limit
     @cards.count < CARDS_LIMIT
+  end
+
+  def positive?
+    @cash > 0
   end
 end
 
