@@ -53,4 +53,8 @@ class Outputs
     print "#{opts[:player].name}: #{opts[:player].display_cards}"
     puts "| Score: #{opts[:player].score} | Cash: #{opts[:player].cash}$"
   end
+
+  def winner(player)
+    puts "Winner #{player.name}!" if player
+  end
 end
