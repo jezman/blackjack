@@ -1,5 +1,5 @@
 class Hand
-  attr_reader :name
+  attr_reader :name, :cash
   attr_accessor :cards
 
   INIT_BET = 10
@@ -29,10 +29,6 @@ class Hand
     str = ''
     cards.each { |card| str += card.display }
     str
-  end
-
-  def cash
-    "#{@cash}$"
   end
 
   protected

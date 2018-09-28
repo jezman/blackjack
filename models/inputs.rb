@@ -1,4 +1,6 @@
 class Inputs
+  TURNS = %w[p pass a add o open].freeze
+
   def wait_to_enter
     begin
       system('stty raw -echo')
@@ -16,10 +18,19 @@ class Inputs
     gets.chomp
   end
 
-  def user_choice
-    # TODO: hint on take
+  def player_turn
     puts
-    print "choice... hint or bet"
-    gets
+    print 'Your turn: [p]ass, [a]dd, [o]pen: '
+    choice = gets.chomp
+    validate!(choice) ? choice : false
   end
+
+  private
+
+  def validate!(answer)
+    raise AnwerError, 'wrong answer' unless TURNS.include?(answer)
+  end
+end
+
+class AnwerError < RuntimeError
 end

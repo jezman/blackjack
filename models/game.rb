@@ -7,15 +7,18 @@ require_relative 'player'
 
 class Game
   def initialize
-    @show_splash = true
+    @show_splash = false
+    # @show_splash = true
     @output = Outputs.new
     @input = Inputs.new
     splash_screen
+    preparing
+    # @input.wait_to_enter ? preparing : exit
   end
 
   def splash_screen
-    @output.splash_screen if @show_splash
-    @input.wait_to_enter ? preparing : exit
+    return unless @show_splash
+    @output.splash_screen
     @show_splash = false
   end
 
@@ -35,12 +38,17 @@ class Game
     deal_two_cards
     init_bet
 
-    # raund
+    begin
     @output.scores(@player, @dealer, @bank)
+    @input.player_turn
+  rescue => e
+    puts e.message
+    sleep 1
+    retry
+  end
   end
 
   def raund
-    @input.user_choice
   end
 
   def deal_two_cards

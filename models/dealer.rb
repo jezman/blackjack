@@ -9,7 +9,7 @@ class Dealer < Hand
 
   def display_cards
     str = ''
-    cards.size.times { str += '🂠  '}
+    cards.size.times { str += '🂠  ' }
     str
   end
 end
