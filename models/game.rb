@@ -16,6 +16,15 @@ class Game
     # @input.wait_to_enter ? preparing : exit
   end
 
+  def start
+    init_deal
+    init_bet
+
+    turn
+  end
+
+  private
+
   def splash_screen
     return unless @show_splash
     @output.splash_screen
@@ -34,28 +43,51 @@ class Game
     retry
   end
 
-  def start
-    deal_two_cards
-    init_bet
+  def dealer_turn
+    puts 'dealer turned'
+  end
 
-    begin
-    @output.scores(@player, @dealer, @bank)
-    @input.player_turn
-  rescue => e
-    puts e.message
-    sleep 1
+  def init_deal
+    2.times do
+      @player.take_card(@deck)
+      @dealer.take_card(@deck)
+    end
+  end
+
+  def turn
+    stats
+    choice
+  rescue ChoiceError => e
+    @output.error(e)
+    retry
+  rescue HandError => e
+    @output.error(e)
     retry
   end
-  end
 
-  def raund
-  end
-
-  def deal_two_cards
-    2.times do
-      @deck.deal_card(@player)
-      @deck.deal_card(@dealer)
+  def choice
+    case @input.player_turn
+    when 'a', 'add'
+      @player.take_card(@deck)
+      stats
+      dealer_turn
+    when 'o', 'open'
+      display_cards
     end
+  end
+
+  def stats(hide = true)
+    options = {
+      player: @player,
+      dealer: @dealer,
+      bank: @bank
+    }
+
+    @output.scores(options, hide)
+  end
+
+  def display_cards
+    stats(false)
   end
 
   def init_bet
