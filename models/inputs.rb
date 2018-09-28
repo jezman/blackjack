@@ -22,15 +22,16 @@ class Inputs
     puts
     print 'Your turn: [p]ass, [a]dd, [o]pen: '
     choice = gets.chomp
-    validate!(choice) ? choice : false
+    validate!(choice)
+    choice
   end
 
   private
 
-  def validate!(answer)
-    raise AnwerError, 'wrong answer' unless TURNS.include?(answer)
+  def validate!(choice)
+    raise ChoiceError, 'wrong answer' unless TURNS.include?(choice)
   end
 end
 
-class AnwerError < RuntimeError
+class ChoiceError < RuntimeError
 end
