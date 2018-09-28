@@ -43,10 +43,6 @@ class Game
     retry
   end
 
-  def dealer_turn
-    puts 'dealer turned'
-  end
-
   def init_deal
     2.times do
       @player.take_card(@deck)
@@ -57,6 +53,7 @@ class Game
   def turn
     stats
     choice
+    # define_winner
   rescue ChoiceError => e
     @output.error(e)
     retry
@@ -72,7 +69,9 @@ class Game
       stats
       dealer_turn
     when 'o', 'open'
-      display_cards
+      define_winner
+    when 'p', 'pass'
+      dealer_turn
     end
   end
 
@@ -86,11 +85,37 @@ class Game
     @output.scores(options, hide)
   end
 
+  def dealer_turn
+    @dealer.take_card(@deck) if @dealer.turn?
+    define_winner
+  end
+
   def display_cards
     stats(false)
   end
 
   def init_bet
-    @bank += @player.init_bet + @dealer.init_bet
+    @bank += @player.bet + @dealer.bet
+  end
+
+  def define_winner
+    display_cards
+    win = @player
+    winner(win)
+  end
+
+  def winner(player = nil)
+    display_cards
+    @output.winner(player)
+  end
+
+  def money_back
+    cash = @bank / 2
+    @player.take_bet(cash)
+    @dealer.take_bet(cash)
+  end
+
+  def tie?
+    @dealer.score == @player.score
   end
 end
