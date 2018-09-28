@@ -15,10 +15,12 @@ class Game
   end
 
   def start
-    init_deal
-    init_bet
+    loop do
+      init_deal
+      init_bet
 
-    turn
+      turn
+    end
   end
 
   private
@@ -86,6 +88,11 @@ class Game
     define_winner
   end
 
+  def reset
+    @bank = 0
+    [@player, @dealer].map(&:throw_cards)
+  end
+
   def display_cards
     stats(false)
   end
@@ -103,6 +110,7 @@ class Game
             [@player, @dealer].max_by(&:score)
           end
     winner(win)
+    @input.continue? ? reset : exit
   end
 
   def winner(player = nil)

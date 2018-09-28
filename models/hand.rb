@@ -42,6 +42,10 @@ class Hand
     @cards << deck.deal_card
   end
 
+  def throw_cards
+    @cards = []
+  end
+
   protected
 
   def validate!
