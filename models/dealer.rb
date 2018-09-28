@@ -12,4 +12,8 @@ class Dealer < Hand
     cards.size.times { str += '🂠  ' }
     str
   end
+
+  def turn?
+    @points < 17
+  end
 end
