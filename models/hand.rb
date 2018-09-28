@@ -27,7 +27,7 @@ class Hand
   end
 
   def take_bet(value)
-    @cards += value
+    @cash += value
   end
 
   def display_cards
