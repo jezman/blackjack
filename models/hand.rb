@@ -31,6 +31,10 @@ class Hand
     str
   end
 
+  def take_card(deck)
+    @cards << deck.deal_card
+  end
+
   protected
 
   def validate!
