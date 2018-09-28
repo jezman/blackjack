@@ -7,7 +7,7 @@ class Dealer < Hand
     super(NAME)
   end
 
-  def display_cards
+  def hide_cards
     str = ''
     cards.size.times { str += '🂠  ' }
     str
