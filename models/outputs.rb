@@ -27,12 +27,30 @@ class Outputs
     puts wait_to_start
   end
 
-  def scores(player, dealer, bank)
+  def scores(opts, hide)
     system 'clear'
     puts logo
-    puts "At stake: #{bank}$".rjust(LINE_LENGTH)
+    puts "At stake: #{opts[:bank]}$".rjust(LINE_LENGTH)
     puts '=' * LINE_LENGTH
-    puts "#{dealer.name}: #{dealer.display_cards}"
-    puts "#{player.name}: #{player.display_cards}| Score: #{player.score} | Cash: #{player.cash}$"
+
+    scores!(opts, hide)
+  end
+
+  def error(error)
+    puts error
+    sleep 1
+  end
+
+  def scores!(opts, hide)
+    print "#{opts[:dealer].name}: "
+    if hide
+      puts opts[:dealer].hide_cards
+    else
+      print opts[:dealer].display_cards
+      print "| Score: #{opts[:dealer].score} | Cash: #{opts[:dealer].cash}$\n"
+    end
+
+    print "#{opts[:player].name}: #{opts[:player].display_cards}"
+    puts "| Score: #{opts[:player].score} | Cash: #{opts[:player].cash}$"
   end
 end
