@@ -2,6 +2,7 @@ class Hand
   attr_reader :name, :cash
   attr_accessor :cards
 
+  CARDS_LIMIT = 3
   INIT_BET = 10
   LIMIT_SCORE = 21
   NAME_FORMAT = /^[a-z]{3,25}$/i
@@ -32,6 +33,7 @@ class Hand
   end
 
   def take_card(deck)
+    validate_cards_count!
     @cards << deck.deal_card
   end
 
@@ -39,6 +41,14 @@ class Hand
 
   def validate!
     raise HandError, 'invalid name! enter 3 to 25 letters' if @name !~ NAME_FORMAT
+  end
+
+  def validate_cards_count!
+    raise HandError, 'too many cards, you can take only three' unless check_cards_count
+  end
+
+  def check_cards_count
+    @cards.count < CARDS_LIMIT
   end
 end
 
