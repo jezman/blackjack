@@ -7,13 +7,11 @@ require_relative 'player'
 
 class Game
   def initialize
-    @show_splash = false
-    # @show_splash = true
+    @show_splash = true
     @output = Outputs.new
     @input = Inputs.new
     splash_screen
-    preparing
-    # @input.wait_to_enter ? preparing : exit
+    @input.wait_to_enter ? preparing : exit
   end
 
   def start
@@ -32,8 +30,7 @@ class Game
   end
 
   def preparing
-    # @player = Player.new(@input.username)
-    @player = Player.new('jezman')
+    @player = Player.new(@input.username)
     @dealer = Dealer.new
     @deck = Deck.new
     @bank = 0
@@ -53,7 +50,6 @@ class Game
   def turn
     stats
     choice
-    # define_winner
   rescue ChoiceError => e
     @output.error(e)
     retry
@@ -99,12 +95,18 @@ class Game
   end
 
   def define_winner
-    display_cards
-    win = @player
+    win = if @player.score > Hand::LIMIT_SCORE
+            @dealer
+          elsif @dealer.score > Hand::LIMIT_SCORE
+            @player
+          elsif !draw?
+            [@player, @dealer].max_by(&:score)
+          end
     winner(win)
   end
 
   def winner(player = nil)
+    player.take_bet(@bank) if player
     display_cards
     @output.winner(player)
   end
@@ -115,7 +117,7 @@ class Game
     @dealer.take_bet(cash)
   end
 
-  def tie?
+  def draw?
     @dealer.score == @player.score
   end
 end
