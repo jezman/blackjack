@@ -55,6 +55,6 @@ class Outputs
   end
 
   def winner(player)
-    puts "Winner #{player.name}!" if player
+    puts player ? "Winner #{player.name}!" : 'Draw...'
   end
 end
