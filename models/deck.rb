@@ -6,8 +6,8 @@ class Deck
     @deck ||= create_deck
   end
 
-  def deal_card
-    @deck.shift
+  def deal_card(player)
+    player.cards << @deck.shift
   end
 
   private

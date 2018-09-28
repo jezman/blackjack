@@ -15,4 +15,11 @@ class Inputs
     print 'Player name: '
     gets.chomp
   end
+
+  def user_choice
+    # TODO: hint on take
+    puts
+    print "choice... hint or bet"
+    gets
+  end
 end

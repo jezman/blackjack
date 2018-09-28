@@ -1,8 +1,10 @@
-class Ouputs
-  def splash_screen
-    system 'clear'
-    puts %q(
-                         Welcome to the Blackjack game
+class Outputs
+  def welcome
+    'Welcome to the Blackjack game'.center(80)
+  end
+
+  def logo
+    %q(
 
     .------..------..------..------..------..------..------..------..------.
     |B.--. ||L.--. ||A.--. ||C.--. ||K.--. ||J.--. ||A.--. ||C.--. ||K.--. |
@@ -10,19 +12,28 @@ class Ouputs
     | ()() || (__) || :\/: || :\/: || :\/: || ()() || :\/: || :\/: || :\/: |
     | '--'B|| '--'L|| '--'A|| '--'C|| '--'K|| '--'J|| '--'A|| '--'C|| '--'K|
     `------'`------'`------'`------'`------'`------'`------'`------'`------'
-
-                Press Enter to start a new game or ESC to quit...
     ).freeze
   end
 
-  def main_interface(player, dealer, bank)
+  def wait_to_start
+    'Press Enter to start a new game or ESC to quit...'.center(80)
+  end
+
+  def splash_screen
     system 'clear'
-    puts "Cash: #{player.cash_to_s}"
+    print welcome
+    puts logo
+    puts wait_to_start
+  end
+
+  def scores(player, dealer, bank)
+    splash_screen
+
+    puts "Cash: #{player.cash}$ At stake: #{bank}$"
     puts
-    puts "#{dealer.name}: #{dealer.hide_cards_to_s}"
-    puts "#{player.name}: #{player.cards_to_s}"
+    puts "#{dealer.name}: #{dealer.display_cards}"
+    puts "#{player.name}: #{player.display_cards}"
     puts
-    puts "Points: #{player.points}"
-    puts "At stake: #{bank}$"
+    puts "Score: #{player.score}"
   end
 end

@@ -1,11 +1,15 @@
-require_relative 'player'
+require_relative 'hand'
 
-class Dealer < Player
+class Dealer < Hand
+  NAME = 'Dealer'.freeze
+
   def initialize
-    super('Dealer')
+    super(NAME)
   end
 
-  def hide_cards_to_s
-    cards_to_s.split(' ').map { |c| c.replace('**') }.join(' ')
+  def display_cards
+    str = ''
+    cards.size.times { str += '🂠  '}
+    str
   end
 end

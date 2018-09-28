@@ -16,6 +16,10 @@ class Card
     @rank == 'A'
   end
 
+  def display
+    "#{@rank}#{@suite} "
+  end
+
   def face?
     %w[J Q K].include?(@rank)
   end

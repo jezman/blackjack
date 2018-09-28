@@ -6,32 +6,47 @@ require_relative 'outputs'
 require_relative 'player'
 
 class Game
-  attr_reader :player, :dealer, :deal
-  attr_accessor :bank
-
   def initialize
-    @output = Ouputs.new
+    @show_splash = true
+    @output = Outputs.new
     @input = Inputs.new
-    # @output.splash_screen
-    # @input.wait_to_enter
+    splash_screen
+  end
+
+  def splash_screen
+    @output.splash_screen if @show_splash
+    @input.wait_to_enter ? preparing : exit
+    @show_splash = false
+  end
+
+  def preparing
     # @player = Player.new(@input.username)
     @player = Player.new('jezman')
-    @deck = Deck.new
     @dealer = Dealer.new
+    @deck = Deck.new
     @bank = 0
+  rescue HandError => e
+    puts "error: #{e.message}. press any key to continue..."
+    @input.wait_to_enter
+    retry
   end
 
   def start
     deal_two_cards
     init_bet
 
-    @output.main_interface(@player, @dealer, @bank)
+    # raund
+    @output.scores(@player, @dealer, @bank)
+  end
+
+  def raund
+    @input.user_choice
   end
 
   def deal_two_cards
     2.times do
-      @player.cards << @deck.deal_card
-      @dealer.cards << @deck.deal_card
+      @deck.deal_card(@player)
+      @deck.deal_card(@dealer)
     end
   end
 
