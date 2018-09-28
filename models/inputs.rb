@@ -26,6 +26,11 @@ class Inputs
     choice
   end
 
+  def continue?
+    print 'Continue game? (y/n) '
+    gets.chomp == 'y'
+  end
+
   private
 
   def validate!(choice)
