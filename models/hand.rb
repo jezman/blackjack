@@ -3,7 +3,7 @@ class Hand
   attr_accessor :cards
 
   CARDS_LIMIT = 3
-  INIT_BET = 10
+  BET_SIZE = 10
   LIMIT_SCORE = 21
   NAME_FORMAT = /^[a-z]{3,25}$/i
 
@@ -21,9 +21,13 @@ class Hand
     @points = points
   end
 
-  def init_bet
-    @cash -= INIT_BET
-    INIT_BET
+  def bet
+    @cash -= BET_SIZE
+    BET_SIZE
+  end
+
+  def take_bet(value)
+    @cards += value
   end
 
   def display_cards
