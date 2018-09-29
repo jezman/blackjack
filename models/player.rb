@@ -1,8 +1,7 @@
 require_relative 'hand'
 
 class Player
-  attr_reader :name, :points
-  attr_accessor :cash
+  attr_reader :name, :points, :cash
 
   SCORE_LIMIT = 21
   NAME_FORMAT = /^[a-z]{3,25}$/i
@@ -14,16 +13,17 @@ class Player
     @cash = 100
   end
 
+  def get_money(value)
+    @cash -= value
+    value
+  end
+
+  def give_money(value)
+    @cash += value
+  end
+
   def score
-    ace = 0
-    points = 0
-
-    @hand.cards.each do |card|
-      ace += 1 if card.ace?
-      points += card.value
-    end
-
-    ace >= 1 && points > SCORE_LIMIT ? points - 10 : points
+    @hand.calculate
   end
 
   def display_cards

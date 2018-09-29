@@ -7,12 +7,11 @@ class Accountant
 
   def bet(player)
     validate_cash!(player)
-    player.cash -= BET_SIZE
-    BET_SIZE
+    player.get_money(BET_SIZE)
   end
 
   def take_bet(player, value)
-    player.cash += value
+    player.give_money(value)
   end
 
   def money_back(bank, player, dealer)
@@ -30,4 +29,7 @@ class Accountant
   def positive?(cash)
     cash > 0
   end
+end
+
+class BetError < RuntimeError
 end

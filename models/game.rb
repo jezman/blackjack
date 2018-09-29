@@ -20,9 +20,13 @@ class Game
       init_deal
       @bank = @accountant.init_bet(@player, @dealer)
       turn
+      final
 
       @input.continue? ? reset : exit
     end
+  rescue BetError => e
+    @output.error(e)
+    exit
   end
 
   private
@@ -82,7 +86,6 @@ class Game
 
   def dealer_turn
     @dealer.take_card(@deck) if @dealer.turn?
-    final
   end
 
   def player_turn
