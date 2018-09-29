@@ -7,6 +7,7 @@ class Deck
   end
 
   def deal_card
+    create_deck if @deck.empty?
     @deck.shift
   end
 
