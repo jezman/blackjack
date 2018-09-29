@@ -7,7 +7,7 @@ class Deck
   end
 
   def deal_card
-    @deck.shift
+    @deck.empty? ? create_deck : @deck.shift
   end
 
   private
