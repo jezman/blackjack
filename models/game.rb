@@ -82,7 +82,7 @@ class Game
 
   def dealer_turn
     @dealer.take_card(@deck) if @dealer.turn?
-    define_winner
+    final
   end
 
   def player_turn
@@ -100,18 +100,20 @@ class Game
     stats(false)
   end
 
-  def define_winner
-    winner = if @player.score > Player::SCORE_LIMIT
-               @dealer
-             elsif @dealer.score > Player::SCORE_LIMIT
-               @player
-             elsif !draw?
-               [@player, @dealer].max_by(&:score)
-             end
-
-    @accountant.money_back(@bank, @player, @dealer) if draw?
-
+  def final
+    winner = define_winner
+    @accountant.money_back(@bank, @player, @dealer) if !winner && draw?
     rewarding_winner(winner)
+  end
+
+  def define_winner
+    if @player.score > Player::SCORE_LIMIT
+      @dealer
+    elsif @dealer.score > Player::SCORE_LIMIT
+      @player
+    elsif !draw?
+      [@player, @dealer].max_by(&:score)
+    end
   end
 
   def rewarding_winner(player = nil)
