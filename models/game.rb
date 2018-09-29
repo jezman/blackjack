@@ -1,3 +1,4 @@
+require_relative 'accountant'
 require_relative 'card'
 require_relative 'dealer'
 require_relative 'deck'
@@ -17,9 +18,10 @@ class Game
   def start
     loop do
       init_deal
-      init_bet
-
+      @bank = @accountant.init_bet(@player, @dealer)
       turn
+
+      @input.continue? ? reset : exit
     end
   end
 
@@ -34,9 +36,10 @@ class Game
   def preparing
     @player = Player.new(@input.username)
     @dealer = Dealer.new
+    @accountant = Accountant.new
     @deck = Deck.new
     @bank = 0
-  rescue HandError => e
+  rescue HandError, PlayerError => e
     @output.error(e)
     retry
   end
@@ -54,7 +57,7 @@ class Game
   rescue ChoiceError => e
     @output.error(e)
     retry
-  rescue HandError => e
+  rescue PlayerError => e
     @output.error(e)
     retry
   end
@@ -97,32 +100,24 @@ class Game
     stats(false)
   end
 
-  def init_bet
-    @bank += @player.bet + @dealer.bet
-  end
-
   def define_winner
-    win = if @player.score > Hand::LIMIT_SCORE
-            @dealer
-          elsif @dealer.score > Hand::LIMIT_SCORE
-            @player
-          elsif !draw?
-            [@player, @dealer].max_by(&:score)
-          end
-    winner(win)
-    @input.continue? ? reset : exit
+    winner = if @player.score > Player::SCORE_LIMIT
+               @dealer
+             elsif @dealer.score > Player::SCORE_LIMIT
+               @player
+             elsif !draw?
+               [@player, @dealer].max_by(&:score)
+             end
+
+    @accountant.money_back(@bank, @player, @dealer) if draw?
+
+    rewarding_winner(winner)
   end
 
-  def winner(player = nil)
-    player.take_bet(@bank) if player
+  def rewarding_winner(player = nil)
+    @accountant.take_bet(player, @bank) if player
     display_cards
     @output.winner(player)
-  end
-
-  def money_back
-    cash = @bank / 2
-    @player.take_bet(cash)
-    @dealer.take_bet(cash)
   end
 
   def draw?

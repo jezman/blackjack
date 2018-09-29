@@ -1,6 +1,6 @@
-require_relative 'hand'
+require_relative 'player'
 
-class Dealer < Hand
+class Dealer < Player
   NAME = 'Dealer'.freeze
 
   def initialize
@@ -9,11 +9,11 @@ class Dealer < Hand
 
   def hide_cards
     str = ''
-    cards.size.times { str += '🂠  ' }
+    @hand.cards.size.times { str += '🂠  ' }
     str
   end
 
   def turn?
-    @points < 17
+    score < 17
   end
 end
