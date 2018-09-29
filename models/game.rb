@@ -37,8 +37,7 @@ class Game
     @deck = Deck.new
     @bank = 0
   rescue HandError => e
-    puts "error: #{e.message}. press any key to continue..."
-    @input.wait_to_enter
+    @output.error(e)
     retry
   end
 
@@ -62,14 +61,9 @@ class Game
 
   def choice
     case @input.player_turn
-    when 'a', 'add'
-      @player.take_card(@deck)
-      stats
-      dealer_turn
-    when 'o', 'open'
-      define_winner
-    when 'p', 'pass'
-      dealer_turn
+    when 'a', 'add' then player_turn
+    when 'o', 'open' then define_winner
+    when 'p', 'pass' then dealer_turn
     end
   end
 
@@ -86,6 +80,12 @@ class Game
   def dealer_turn
     @dealer.take_card(@deck) if @dealer.turn?
     define_winner
+  end
+
+  def player_turn
+    @player.take_card(@deck)
+    stats
+    dealer_turn
   end
 
   def reset

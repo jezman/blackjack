@@ -37,7 +37,7 @@ class Outputs
   end
 
   def error(error)
-    puts error
+    puts "error: #{error}"
     sleep 1
   end
 
