@@ -16,9 +16,13 @@ class Hand
   end
 
   def score
+    ace = 0
     points = 0
-    cards.each { |card| points += card.value }
-    @points = points
+    cards.each do |card|
+      ace += 1 if card.ace?
+      points += card.value
+    end
+    ace >= 1 && points > LIMIT_SCORE ? points - 10 : points
   end
 
   def bet
