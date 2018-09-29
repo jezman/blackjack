@@ -8,20 +8,12 @@ class Card
     @value = assign_value
   end
 
-  def switch_ace_value
-    @value = 11 if @value == 1
-  end
-
   def ace?
     @rank == 'A'
   end
 
   def display
     "#{@rank}#{@suite} "
-  end
-
-  def face?
-    %w[J Q K].include?(@rank)
   end
 
   private
@@ -34,5 +26,9 @@ class Card
              else
                @rank
              end
+  end
+
+  def face?
+    %w[J Q K].include?(@rank)
   end
 end
