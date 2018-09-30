@@ -1,5 +1,4 @@
 require_relative 'accountant'
-require_relative 'card'
 require_relative 'dealer'
 require_relative 'deck'
 require_relative 'inputs'
@@ -58,10 +57,7 @@ class Game
   def turn
     stats
     choice
-  rescue ChoiceError => e
-    @output.error(e)
-    retry
-  rescue PlayerError => e
+  rescue ChoiceError, PlayerError => e
     @output.error(e)
     retry
   end
