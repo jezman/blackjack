@@ -42,7 +42,7 @@ class Game
     @accountant = Accountant.new
     @deck = Deck.new
     @bank = 0
-  rescue HandError, PlayerError => e
+  rescue HandError, PlayerError, CardError => e
     @output.error(e)
     retry
   end
