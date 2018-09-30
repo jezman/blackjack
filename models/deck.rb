@@ -1,7 +1,6 @@
-class Deck
-  RANKS = Array(2..10) + %w[J Q K A].freeze
-  SUITES = %w[♠ ♦ ♥ ♣].freeze
+require_relative 'card'
 
+class Deck
   def initialize
     @deck ||= create_deck
   end
@@ -15,7 +14,11 @@ class Deck
 
   def create_deck
     deck = []
-    RANKS.each { |rank| SUITES.each { |suite| deck << Card.new(rank, suite) } }
+    ranks = Card::RANKS
+    suites = Card::SUITES
+
+    ranks.each { |rank| suites.each { |suite| deck << Card.new(rank, suite) } }
+
     deck.shuffle!
   end
 end

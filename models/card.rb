@@ -5,9 +5,13 @@ class Card
   ACE_MIN_VALUE = 1
   ACE_MAX_VALUE = 11
 
+  RANKS = Array(2..10) + %w[J Q K A].freeze
+  SUITES = %w[♠ ♦ ♥ ♣].freeze
+
   def initialize(rank, suite)
     @rank = rank
     @suite = suite
+    validate!
     @value = assign_value
   end
 
@@ -34,4 +38,12 @@ class Card
                @rank
              end
   end
+
+  def validate!
+    raise CardError, 'unknown rank' unless RANKS.include?(@rank)
+    raise CardError, 'unknown suite' unless SUITES.include?(@suite)
+  end
+end
+
+class CardError < RuntimeError
 end
