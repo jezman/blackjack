@@ -2,6 +2,9 @@ class Card
   attr_reader :rank, :suite
   attr_accessor :value
 
+  ACE_MIN_VALUE = 1
+  ACE_MAX_VALUE = 11
+
   def initialize(rank, suite)
     @rank = rank
     @suite = suite
@@ -10,6 +13,10 @@ class Card
 
   def ace?
     @rank == 'A'
+  end
+
+  def face?
+    %w[J Q K].include?(@rank)
   end
 
   def display
@@ -26,9 +33,5 @@ class Card
              else
                @rank
              end
-  end
-
-  def face?
-    %w[J Q K].include?(@rank)
   end
 end
