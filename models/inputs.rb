@@ -1,3 +1,5 @@
+require 'colorize'
+
 class Inputs
   TURNS = %w[p pass a add o open].freeze
 
@@ -14,20 +16,20 @@ class Inputs
   def username
     system('clear')
 
-    print 'Player name: '
+    print 'Player name: '.colorize(:light_white)
     gets.chomp
   end
 
   def player_turn
     puts
-    print 'Your turn: [p]ass, [a]dd, [o]pen: '
+    print 'Your turn: [p]ass, [a]dd, [o]pen: '.colorize(:light_white)
     choice = gets.chomp
     validate!(choice)
     choice
   end
 
   def continue?
-    print 'Continue game? (y/n) '
+    print 'Continue game? (y/n) '.colorize(:light_white)
     gets.chomp == 'y'
   end
 

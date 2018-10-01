@@ -1,3 +1,5 @@
+require 'colorize'
+
 class Outputs
   LINE_LENGTH = 72
 
@@ -13,7 +15,7 @@ class Outputs
 | ()() || (__) || :\/: || :\/: || :\/: || ()() || :\/: || :\/: || :\/: |
 | '--'B|| '--'L|| '--'A|| '--'C|| '--'K|| '--'J|| '--'A|| '--'C|| '--'K|
 `------'`------'`------'`------'`------'`------'`------'`------'`------'
-).freeze
+).freeze.colorize(:red)
   end
 
   def wait_to_start
@@ -22,41 +24,40 @@ class Outputs
 
   def splash_screen
     system 'clear'
-    puts welcome
+    puts welcome.colorize(:green)
     puts logo
-    puts wait_to_start
+    puts wait_to_start.colorize(:light_white).blink
   end
 
   def scores(opts, hide)
     system 'clear'
     puts logo
-    puts "At stake: #{opts[:bank]}$".rjust(LINE_LENGTH)
-    puts '=' * LINE_LENGTH
+    puts "Cash: #{opts[:player].cash}$".rjust(LINE_LENGTH).colorize(:red)
+    # puts '='.colorize(:light_white) * LINE_LENGTH
 
     scores!(opts, hide)
   end
 
   def error(error)
-    puts "error: #{error}"
+    puts "error: #{error}".colorize(:red)
     sleep 1
   end
 
   def scores!(opts, hide)
-    dname = "#{opts[:dealer].name}: "
+    dname = "#{opts[:dealer].name}: ".colorize(:yellow)
     if hide
-      puts "#{dname}???"
-      puts opts[:dealer].hide_cards
+      puts "#{dname}???".colorize(:yellow)
+      puts opts[:dealer].hide_cards.colorize(:yellow)
     else
-      puts "#{dname} #{opts[:dealer].score}"
-      puts opts[:dealer].display_cards
+      puts "#{dname} #{opts[:dealer].score}".colorize(:yellow)
+      puts opts[:dealer].display_cards.colorize(:yellow)
     end
 
-    puts "#{opts[:player].name}: #{opts[:player].score}"
-    puts "#{opts[:player].display_cards}"
-    puts "Cash: #{opts[:player].cash}$"
+    puts "#{opts[:player].name}: #{opts[:player].score}".colorize(:green)
+    puts opts[:player].display_cards.colorize(:green)
   end
 
   def winner(player)
-    puts player ? "Winner #{player.name}!" : 'Draw...'
+    puts player ? "Winner #{player.name}!".colorize(:green) : 'Draw...'.colorize(:green)
   end
 end
