@@ -1,2 +1,2 @@
 # Console Blackjack
-[![BJ](img/blackjack.png)](img/blackjack.img)
+![BJ](img/blackjack.png)
