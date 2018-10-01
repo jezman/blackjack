@@ -27,9 +27,9 @@ class Player
   end
 
   def display_cards
-    str = ''
-    @hand.cards.each { |card| str += card.display }
-    str
+    tmp = []
+    @hand.cards.each { |card| tmp << card.display }
+    cards_string(tmp)
   end
 
   def take_card(deck)
@@ -42,6 +42,19 @@ class Player
   end
 
   protected
+
+  def cards_string(cards)
+    cards_str = ''
+    first = cards.first
+    zip = cards.size == 3 ? first.zip(cards[1], cards[2]) : first.zip(cards[1])
+
+    zip.each do |e|
+      e.each { |g| cards_str += "#{g} " }
+      cards_str += "\n"
+    end
+
+    cards_str
+  end
 
   def validate!
     raise PlayerError, 'invalid name! enter 3 to 25 letters' if @name !~ NAME_FORMAT

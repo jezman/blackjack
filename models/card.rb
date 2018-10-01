@@ -1,4 +1,7 @@
+require_relative '../modules/card_template'
 class Card
+  include CardTemplate
+
   attr_reader :rank, :suite
   attr_accessor :value
 
@@ -24,7 +27,11 @@ class Card
   end
 
   def display
-    "#{@rank}#{@suite} "
+    face_card(@rank, @suite)
+  end
+
+  def display_hide
+    hidden_card
   end
 
   private

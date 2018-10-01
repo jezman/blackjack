@@ -42,16 +42,18 @@ class Outputs
   end
 
   def scores!(opts, hide)
-    print "#{opts[:dealer].name}: "
+    dname = "#{opts[:dealer].name}: "
     if hide
+      puts "#{dname}???"
       puts opts[:dealer].hide_cards
     else
-      print opts[:dealer].display_cards
-      print "| Score: #{opts[:dealer].score} | Cash: #{opts[:dealer].cash}$\n"
+      puts "#{dname} #{opts[:dealer].score}"
+      puts opts[:dealer].display_cards
     end
 
-    print "#{opts[:player].name}: #{opts[:player].display_cards}"
-    puts "| Score: #{opts[:player].score} | Cash: #{opts[:player].cash}$"
+    puts "#{opts[:player].name}: #{opts[:player].score}"
+    puts "#{opts[:player].display_cards}"
+    puts "Cash: #{opts[:player].cash}$"
   end
 
   def winner(player)
