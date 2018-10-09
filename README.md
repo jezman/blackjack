@@ -12,4 +12,4 @@ Final project for the Thinknetica 'Ruby basics' course.
 `ruby ./blackjack.rb`
 
 ## License
-MIT @ jezman
+MIT © 2018 jezman
