@@ -23,11 +23,7 @@ class Accountant
   private
 
   def validate_cash!(player)
-    raise BetError, 'sorry, you have no money...' unless positive?(player.cash)
-  end
-
-  def positive?(cash)
-    cash > 0
+    raise BetError, 'sorry, you have no money...' unless player.cash.positive?
   end
 end
 

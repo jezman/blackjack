@@ -65,15 +65,11 @@ class Player
   end
 
   def validate_cashe!
-    raise PlayerError, 'sorry, you have no money...' unless positive?
+    raise PlayerError, 'sorry, you have no money...' unless @cash.positive?
   end
 
   def check_limit
     @hand.cards.count < Hand::CARDS_LIMIT
-  end
-
-  def positive?
-    @cash > 0
   end
 end
 
